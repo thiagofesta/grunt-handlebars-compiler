@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				separator: grunt.util.linefeed,
 				namespace: 'Handlebars.templates',
 				exportAMD: false,
-                isRuntime: false,           // only relevant to 'exportAMD: true'
+                useRuntime: false,           // only relevant to 'exportAMD: true'
 				exportCommonJS: false,
 				pathToHandlebars: '',		// only relevant to 'exportAMD: true' - amd style option
 				knownHelpers: [],			// provide an array of known helpers
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 		if (options.exportAMD && options.exportCommonJS) {
 			grunt.fail.warn('Cannot choose to compile as both an AMD and a CommonJS module. Please remove either the \'exportAMD\' or \'exportCommonJS\' option from your Gruntfile.js.');
 		} else if (options.exportAMD) {
-			prefix = 'define([\'' + options.pathToHandlebars + 'handlebars'+ (options.isRuntime ? ".runtime" : "") +'\'], function () {\n';
+			prefix = 'define([\'' + options.pathToHandlebars + 'handlebars'+ (options.useRuntime ? ".runtime" : "") +'\'], function () {\n';
 			grunt.log.writeln('Compiling as AMD/RequireJS module(s).');
 			suffix = '});';
 		} else if (options.exportCommonJS) {
