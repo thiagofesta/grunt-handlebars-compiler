@@ -31,14 +31,13 @@ module.exports = function(grunt) {
 				knownHelpers: [],			// provide an array of known helpers
 				knownOnly: false,			// compile known helpers only
 				templateRoot: false,		// base value to strip from template names
-				partial: false,				// specify that templates are partials
-                dependencies: []            // only relevand to 'exportAMD: true''
+				partial: false				// specify that templates are partials
 			}),
 			compilerOptions = {},
 			known = {},
 			knownLabel = '',
 			processFilename,
-			prefix, midfix, wrapOpen, wrapClose, suffix, deps;
+			prefix, midfix, wrapOpen, wrapClose, suffix;
 
 		grunt.verbose.writeflags(options, 'Options');
 
@@ -53,9 +52,7 @@ module.exports = function(grunt) {
 		if (options.exportAMD && options.exportCommonJS) {
 			grunt.fail.warn('Cannot choose to compile as both an AMD and a CommonJS module. Please remove either the \'exportAMD\' or \'exportCommonJS\' option from your Gruntfile.js.');
 		} else if (options.exportAMD) {
-            deps = options.dependencies.join(", ") + ", ";
-            
-			prefix = 'define(['+deps+'\'' + options.pathToHandlebars + 'handlebars'+ (options.useRuntime ? ".runtime" : "") +'\'], function () {\n';
+			prefix = 'define([\'' + options.pathToHandlebars + 'handlebars'+ (options.useRuntime ? ".runtime" : "") +'\'], function () {\n';
 			grunt.log.writeln('Compiling as AMD/RequireJS module(s).');
 			suffix = '});';
 		} else if (options.exportCommonJS) {
